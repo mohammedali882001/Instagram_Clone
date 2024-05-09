@@ -1,0 +1,60 @@
+﻿@model List<Post>
+
+
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="container mt-3">
+                @for (int index = 0; index < Model.Count; index += 2)
+                {
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-2">
+                            <form method="post" action="@Url.Action("openPost", "Explore")" class="postForm">
+                                <input type="hidden" name="postId" value="@Model[index].Id" />
+                                <img width="100%" src="~/images/@ViewBag.paths[index]" class="postImage">
+                            </form>
+                        </div>
+                        @if (index + 1 < Model.Count)
+                        {
+                            <div class="col-md-6">
+                                <form method="post" action="@Url.Action("openPost", "Explore")" class="postForm">
+                                    <input type="hidden" name="postId" value="@Model[index + 1].Id" />
+                                    <img width="100%" src="~/images/@ViewBag.paths[index + 1]" class="postImage">
+                                </form>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+    img:hover
+    {
+        cursor: pointer;
+        height:max-content;
+    }
+
+
+</style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var postForms = document.querySelectorAll('.postForm');
+        postForms.forEach(function (form) {
+            form.addEventListener('click', function () {
+                this.submit();
+            });
+        });
+    });
+
+
+</script>
+
+
